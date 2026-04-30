@@ -1,0 +1,43 @@
+-- Core DAX measures for the AdventureWorks executive dashboard.
+
+Total Revenue =
+SUM(FactSales[LineTotal])
+
+Total Profit =
+SUM(FactSales[Profit])
+
+Total Orders =
+DISTINCTCOUNT(FactSales[SalesOrderID])
+
+Units Sold =
+SUM(FactSales[OrderQty])
+
+Average Order Value =
+DIVIDE([Total Revenue], [Total Orders])
+
+Profit Margin % =
+DIVIDE([Total Profit], [Total Revenue])
+
+Revenue Previous Year =
+CALCULATE(
+    [Total Revenue],
+    SAMEPERIODLASTYEAR(DimDate[Date])
+)
+
+YoY Revenue Growth % =
+DIVIDE(
+    [Total Revenue] - [Revenue Previous Year],
+    [Revenue Previous Year]
+)
+
+Revenue YTD =
+TOTALYTD(
+    [Total Revenue],
+    DimDate[Date]
+)
+
+Profit YTD =
+TOTALYTD(
+    [Total Profit],
+    DimDate[Date]
+)
